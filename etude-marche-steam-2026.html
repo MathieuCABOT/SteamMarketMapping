@@ -1,0 +1,462 @@
+<title>Cartographie Steam 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : rapport à colonne de lecture (68ch) + grille large qui déborde dans son propre conteneur. */
+:root{
+  --bg:#f6f7f6; --surface:#ffffff; --fg:#17201f; --muted:#5b6866; --line:#d7dedc;
+  --accent:#0f6b63; --accent-soft:#dcefec;
+  --ok:#2f7d4f; --ok-soft:#e1f1e6; --warn:#b4661a; --warn-soft:#f8e9d8; --bad:#a83a32; --bad-soft:#f6e0dd; --niche:#5a4f9c; --niche-soft:#e7e3f5;
+  --display:"Instrument Serif",Georgia,serif; --body:"Instrument Sans",system-ui,sans-serif; --mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121716; --surface:#1a2120; --fg:#e7ecea; --muted:#9aa7a4; --line:#2c3634;
+  --accent:#5fc4b8; --accent-soft:#17312e;
+  --ok:#6cc48c; --ok-soft:#1b3326; --warn:#e3a35a; --warn-soft:#3a2a16; --bad:#e3827a; --bad-soft:#3b1f1c; --niche:#aea3e8; --niche-soft:#272141; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121716; --surface:#1a2120; --fg:#e7ecea; --muted:#9aa7a4; --line:#2c3634;
+  --accent:#5fc4b8; --accent-soft:#17312e;
+  --ok:#6cc48c; --ok-soft:#1b3326; --warn:#e3a35a; --warn-soft:#3a2a16; --bad:#e3827a; --bad-soft:#3b1f1c; --niche:#aea3e8; --niche-soft:#272141; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:32px 64px}
+.read{max-width:68ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.05}
+h2{font-size:1.7rem;margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+h3{font-size:1.25rem;margin-top:1.6rem}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.1rem;color:var(--muted);margin-top:.8rem}
+p{margin:.7rem 0}
+ul{padding-left:1.2rem;margin:.6rem 0}
+li{margin:.3rem 0}
+strong{font-weight:600}
+a{color:var(--accent)}
+.chip{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;padding:.15em .55em;border-radius:3px;white-space:nowrap}
+.c-em{background:var(--ok-soft);color:var(--ok)} .c-ms{background:var(--accent-soft);color:var(--accent)} .c-sat{background:var(--bad-soft);color:var(--bad)} .c-ni{background:var(--niche-soft);color:var(--niche)} .c-mix{background:var(--warn-soft);color:var(--warn)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1rem}
+.facts div{background:var(--surface);padding:.9rem 1rem;min-width:0}
+.facts b{display:block;font-family:var(--mono);font-size:1.15rem;font-weight:500;font-variant-numeric:tabular-nums}
+.facts span{font-size:.85rem;color:var(--muted)}
+.tablewrap{overflow-x:auto;margin-top:1rem;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:980px;font-size:.88rem}
+th,td{text-align:left;padding:.55rem .65rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--surface)}
+th:hover{color:var(--accent)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.tot{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+tr.fam td{background:var(--bg);font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.35rem .65rem}
+.dots{display:inline-flex;gap:3px;vertical-align:middle}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:inline-block}
+.dots i.on{background:var(--accent)}
+td.angle{min-width:260px;color:var(--fg)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:1rem}
+.card{background:var(--surface);border:1px solid var(--line);padding:1rem 1.1rem;min-width:0}
+.card h4{font-family:var(--body);font-weight:600;font-size:1rem;margin:0 0 .3rem;display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+.card .k{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:.4rem 0}
+.card ul{font-size:.9rem;padding-left:1.1rem}
+.card .angle{margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--line);font-size:.9rem}
+.card .angle b{color:var(--accent)}
+.zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:1rem}
+.zone{border:1px solid var(--line);background:var(--surface);padding:1rem 1.1rem;min-width:0;border-top:3px solid var(--accent)}
+.zone.b{border-top-color:var(--niche)} .zone.c{border-top-color:var(--bad)}
+.zone h3{margin-top:0;font-size:1.2rem}
+.lens{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:1rem}
+.lens ol{padding-left:1.2rem;font-size:.92rem;margin:.4rem 0}
+.lens div{background:var(--surface);border:1px solid var(--line);padding:1rem 1.1rem;min-width:0}
+.note{background:var(--surface);border-left:3px solid var(--warn);padding:.8rem 1rem;margin-top:1rem;font-size:.92rem}
+.src{font-size:.82rem;columns:2;column-gap:2rem;margin-top:.8rem}
+.src li{break-inside:avoid;margin:.2rem 0}
+@media (max-width:640px){.src{columns:1}.wrap{padding-inline:16px}}
+.legend{font-size:.82rem;color:var(--muted);margin-top:.5rem}
+</style>
+
+<div class="wrap">
+<div class="read">
+<div class="eyebrow">Étude de marché · Steam · état au 4 octobre 2026</div>
+<h1>Cartographie Steam 2026</h1>
+<p class="lede">Dix-sept familles de jeux passées au même crible pour situer où un jeu premium Steam, pensé pour le clip et l'anecdote, a de la place en 2027-2028. Chaque chiffre est daté et sourcé ; les estimations de tiers sont marquées comme telles.</p>
+
+<h2>Lecture en soixante secondes</h2>
+<ul>
+<li><strong>Le marché récompense le coop à concept lisible.</strong> Les cinq plus gros nouveaux indés de 2025 sont tous coop, à 5 à 20 $. Le coop en ligne convertit ses wishlists jusqu'à 266 fois mieux que la médiane (Peak), ce qui réduit la dépendance à la longue campagne de wishlists.</li>
+<li><strong>Friendslop n'est pas saturé en demande, mais saturé en offre horreur.</strong> Chaque leader bat le pic du précédent, l'audience migre tous les 3 à 9 mois, et les hits 2025-2026 sont majoritairement non-horreur (escalade, pêche, cache-cache, camping-car).</li>
+<li><strong>Vos intuitions de départ étaient à moitié vraies.</strong> Le tactique a la pire médiane des genres étudiés mais produit 25 à 33 jeux à plus d'un million de dollars par an. Le narratif court est le genre avec le plus de succès absolus, et le plus grand risque de n'être jamais vu.</li>
+<li><strong>Les clips amorcent, Steam convertit.</strong> Sur un hit de juillet 2026, deux Shorts réussis ont rapporté 769 wishlists quand la démo et le New &amp; Trending en ont rapporté 36 946. Balatro n'a jamais été lancé par TikTok mais par 300 petits streamers et deux démos.</li>
+<li><strong>Les zones à éviter sont nettes.</strong> Extraction PvPvE, horreur asymétrique, compétitif free-to-play, bullet heaven 2D, clones de Slay the Spire, « X Simulator » solo, cozy sans boucle, metroidvania standard.</li>
+</ul>
+</div>
+
+<h2>Le marché Steam en 2026</h2>
+<div class="facts">
+<div><b>~24 000</b><span>jeux projetés en 2026, soit 66 à 70 par jour (20 282 en 2025)</span></div>
+<div><b>2,99 %</b><span>des sorties 2025 ont dépassé 1 000 avis, meilleur taux depuis 2022</span></div>
+<div><b>249 $</b><span>revenu brut médian d'un jeu sorti en 2025 (estimation Gamalytic)</span></div>
+<div><b>5 863</b><span>titres à plus de 100 000 $ en 2025, contre ~3 000 en 2020 (Valve, GDC 2026)</span></div>
+<div><b>0,15</b><span>vente par wishlist en semaine 1, médiane ; 0,10 au-dessus de 10 $ (GameDiscoverCo)</span></div>
+<div><b>15,64 $</b><span>prix médian de lancement du top 50 mensuel en unités, contre 19,50 $ en 2023</span></div>
+<div><b>19,3 %</b><span>conversion démo vers wishlist, médiane Next Fest juin 2026</span></div>
+<div><b>40 %</b><span>du revenu du mois d'Early Access : ce que rapporte en médiane le passage en 1.0</span></div>
+</div>
+<div class="read">
+<p>Trois mouvements structurels pèsent sur une sortie 2027-2028. Les deals universels de Steam disparaissent début 2027 au profit de recommandations personnalisées, ce que Simon Carless lit comme un gain pour les niches indés. Les Next Fest accueillent désormais plus de 4 000 démos, et la médiane y est tombée à 200 wishlists : seuls les jeux qui arrivent avec une base et un momentum récent en profitent. Enfin le segment de prix 25 à 55 $ est pris en étau entre le AAA et les indés viraux à moins de 10 $.</p>
+</div>
+
+<h2>La grille</h2>
+<div class="read">
+<p>Cinq axes notés de 1 à 5 à partir des données collectées. <strong>Demande</strong> : taille de l'audience et fréquence des hits récents. <strong>Place</strong> : marge entre l'offre et la demande, et position dans le cycle. <strong>Clip</strong> : aptitude du genre à produire des moments de 15 à 60 secondes lisibles sans contexte. <strong>Anecdote</strong> : capacité des systèmes à fabriquer des histoires que les joueurs racontent. <strong>Risque faible</strong> : 5 quand la production et l'infrastructure sont maîtrisables, 1 quand le genre exige des serveurs autoritaires et une masse critique. Le total n'est pas un classement, c'est une aide de lecture : les pondérations sont à vous. Cliquez un en-tête pour trier.</p>
+</div>
+<div class="tablewrap">
+<table id="grid">
+<thead><tr><th data-k="name">Genre</th><th data-k="d">Demande</th><th data-k="p">Place</th><th data-k="c">Clip</th><th data-k="a">Anecdote</th><th data-k="r">Risque faible</th><th data-k="t">Total</th><th>Position</th><th>Angle qui a de la place</th></tr></thead>
+<tbody>
+<tr class="fam"><td colspan="9">Jouer entre amis</td></tr>
+<tr data-d="5" data-p="3" data-c="5" data-a="5" data-r="3"><td><strong>Coop horreur à physique / friendslop</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ms">mature sain, 2e vague</span></td><td class="angle">Variante non-horreur avec structure d'objectif ; éviter « porter des objets » comme seul verbe</td></tr>
+<tr data-d="4" data-p="3" data-c="5" data-a="4" data-r="4"><td><strong>Party / coop physique chaotique</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ms">mature sain, scindé</span></td><td class="angle">Coop-only premium 15-20 $ à forte identité (Big Walk), ou party PvP à payoff toutes les 30-60 s</td></tr>
+<tr data-d="3" data-p="2" data-c="5" data-a="4" data-r="3"><td><strong>Déduction sociale / bluff</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ni">niche à pics</span></td><td class="angle">Un « moment de vérité » greffé sur un autre genre, pas un jeu de déduction autonome</td></tr>
+<tr class="fam"><td colspan="9">Systémique et émergent</td></tr>
+<tr data-d="4" data-p="4" data-c="5" data-a="5" data-r="3"><td><strong>Chaos coop systémique / sandbox physique</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-em">émergent, hit-driven</span></td><td class="angle">Hook lisible en 5 mots + systèmes qui se croisent, 15-20 $, 2-4 joueurs (Schedule I, Abiotic Factor)</td></tr>
+<tr data-d="4" data-p="3" data-c="1" data-a="5" data-r="3"><td><strong>Colony sim / histoires émergentes</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ms">mature sain au sommet</span></td><td class="angle">Twist fort (castors + eau) et rétention extrême ; stratégie YouTube long format, pas clip</td></tr>
+<tr data-d="5" data-p="2" data-c="2" data-a="4" data-r="3"><td><strong>Survival crafting coop</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ms">mature, milieu saturé</span></td><td class="angle">Hybride à angle net (Half-Life + Lethal Company) ; le survival générique est pris par les IP</td></tr>
+<tr data-d="4" data-p="2" data-c="2" data-a="2" data-r="3"><td><strong>Automation / factory</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-sat">winner-takes-most</span></td><td class="angle">Seulement un twist de forme (puzzle-factory sans ennemi) ; le « Satisfactory mais » est mort</td></tr>
+<tr class="fam"><td colspan="9">Multijoueur compétitif</td></tr>
+<tr data-d="4" data-p="1" data-c="5" data-a="5" data-r="1"><td><strong>Extraction / PvPvE</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-sat">saturé au sommet</span></td><td class="angle">Uniquement la variante coop PvE à faible enjeu (Grain Rot) ; jamais le PvPvE hardcore</td></tr>
+<tr data-d="3" data-p="2" data-c="5" data-a="3" data-r="2"><td><strong>Sports physique compétitif</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ni">niche fidèle à pics</span></td><td class="angle">Coop casual à petit prix (Golf With Your Friends, Super Battle Golf) ; pas de Rocket League-like</td></tr>
+<tr data-d="3" data-p="1" data-c="4" data-a="3" data-r="1"><td><strong>Horreur asymétrique</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-sat">winner-take-all</span></td><td class="angle">Aucun : Dead by Daylight absorbe tout, les challengers meurent en 18-24 mois</td></tr>
+<tr class="fam"><td colspan="9">Boucles courtes solo</td></tr>
+<tr data-d="5" data-p="2" data-c="4" data-a="2" data-r="5"><td><strong>Roguelite action / bullet heaven</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-mix">2D saturé, 3D émergent</span></td><td class="angle">Pivot 3D ou physique (Megabonk, Ball x Pit) avec polish élevé ; les streamers ne répondent plus au 2D</td></tr>
+<tr data-d="4" data-p="2" data-c="4" data-a="2" data-r="5"><td><strong>Roguelike deckbuilder / Balatro-like</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-mix">clones saturés, hooks ouverts</span></td><td class="angle">Métaphore de hasard neuve à 15 $ max, ou coop (Slay the Spire 2 est le premier gros coop du genre)</td></tr>
+<tr data-d="5" data-p="3" data-c="4" data-a="3" data-r="4"><td><strong>Job sim / « simulator »</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-mix">solo saturé, coop émergent</span></td><td class="angle">Sim d'équipe coop à concept lisible (crewlike) ; le « X Simulator » solo plafonne à 70 k$ en médiane</td></tr>
+<tr class="fam"><td colspan="9">Genres témoins</td></tr>
+<tr data-d="3" data-p="2" data-c="1" data-a="4" data-r="5"><td><strong>Tactique au tour par tour</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-ni">niche fidèle, saine au sommet</span></td><td class="angle">Éditeur spécialisé (Hooded Horse) et profondeur systémique ; aucun milieu de gamme</td></tr>
+<tr data-d="5" data-p="2" data-c="5" data-a="1" data-r="5"><td><strong>Narratif court / horreur à twist</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-mix">sain au sommet, file saturée</span></td><td class="angle">Prix impulsif (3-13 $) et ramifications ; le linéaire au-dessus de 25 $ se fait cannibaliser par le stream</td></tr>
+<tr data-d="4" data-p="2" data-c="2" data-a="2" data-r="4"><td><strong>Cozy / farming sim</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-mix">farming sain, cozy saturé</span></td><td class="angle">Stardew-like à boucle complète ; le tag cozy a triplé en 2026 et sa médiane s'est effondrée</td></tr>
+<tr data-d="3" data-p="2" data-c="3" data-a="1" data-r="5"><td><strong>Metroidvania</strong></td><td></td><td></td><td></td><td></td><td></td><td class="tot"></td><td><span class="chip c-sat">saturé au milieu</span></td><td class="angle">Jeu d'auteur en 6-7 ans (Animal Well, Nine Sols) ; un metroidvania « bien fait » peut faire 30 k copies</td></tr>
+</tbody>
+</table>
+</div>
+<p class="legend">Notes : jugement d'analyste à partir des sources de la section Méthode. Les deux lignes à 21 points, friendslop et chaos coop systémique, sont aussi les deux plus encombrées : c'est le prix de l'alignement avec vos deux lentilles.</p>
+
+<h2>Fiches par famille</h2>
+<div class="read"><p>Chaque fiche donne les chiffres qui ont pesé dans la note, puis l'angle que les données laissent ouvert. Les montants sont bruts, en dollars US sauf mention. Les estimations de ventes viennent de modèles tiers fondés sur le nombre d'avis, et surestiment souvent les hits à bas prix.</p></div>
+
+<h3>Jouer entre amis</h3>
+<div class="cards">
+<div class="card"><h4>Coop horreur à physique / friendslop <span class="chip c-ms">mature sain</span></h4>
+<div class="k">4-8 joueurs · 6-10 $ · pas de tag Steam officiel</div>
+<ul>
+<li>R.E.P.O. 18,4 M copies et 147 M$ en 2025 ; Peak 15,5 M avec 29 000 wishlists seulement avant lancement ; Meccha Chameleon 15-20 M, fait par 1-2 devs en 2 mois ; How to Fish 6,3 M en août 2026.</li>
+<li>Le leader capte 47-50 % de l'audience au lancement puis 10 % en 3-9 mois (Zukowski, juillet 2026). Rétention à 30 jours : 3 %.</li>
+<li>Offre horreur saturée depuis fin 2024 (Murky Divers : 204 joueurs au pic). Un top 2 du Next Fest de février 2026 a été étouffé le jour de sortie de Meccha Chameleon.</li>
+<li>Clip canonique 8-20 s : perte de contrôle physique ou son réel via proximity chat, puis cri, silence, rire du groupe.</li>
+</ul>
+<div class="angle"><b>Angle :</b> variante non-horreur avec une structure de manche et d'objectif. Le verbe « porter » est déjà le cœur de R.E.P.O., Peak, Content Warning et Human Fall Flat. Lancer loin d'un mastodonte annoncé (Dear Passengers, 1,5 M wishlists en 5 jours).</div></div>
+
+<div class="card"><h4>Party / coop physique chaotique <span class="chip c-ms">mature sain</span></h4>
+<div class="k">2-8 joueurs · 5-8 $ ou 15-20 $ · tag Party Game 1 231 jeux</div>
+<ul>
+<li>Chained Together (studio français, 4,99 $) : plus de 10 M copies en juin 2026, 218 000 spectateurs Twitch la première semaine, et une résurgence à 170 000 en 2026.</li>
+<li>Super Battle Golf (7,99 $) : 500 000 en 9 jours. Big Walk (19,99 $, coop-only) : 1,7 M estimées ; GameDiscoverCo y voit « un marché sous-servi ».</li>
+<li>Contre-exemple : WheelMates, 370 000 wishlists et 194 000 démos pour 16 600 copies estimées. Le party canapé classique ne produit plus de breakout.</li>
+<li>Clip 5-15 s : rupture collective, faute attribuable (« c'est toi ! »), perte instantanée d'un progrès long.</li>
+</ul>
+<div class="angle"><b>Angle :</b> coop-only premium 15-20 $ avec une identité esthétique forte, ou party PvP où le payoff arrive toutes les 30 à 60 secondes.</div></div>
+
+<div class="card"><h4>Déduction sociale / bluff <span class="chip c-ni">niche à pics</span></h4>
+<div class="k">4-8 joueurs · 3-10 $ · tag Social Deduction 283 jeux</div>
+<ul>
+<li>Liar's Bar : 109 000 joueurs simultanés en octobre 2024, 513 en moyenne en septembre 2026, soit une perte de 99 % en 24 mois. Buckshot Roulette : 8 M copies, ventes doublées en 2025 grâce au mode multi.</li>
+<li>Among Us 3D (Innersloth) : 73 % d'avis positifs, 280 joueurs au pic. Aucun nouveau hit à plus de 20 000 joueurs en 2026.</li>
+<li>Steam a créé un Social Deduction Fest en juillet 2026, signe d'une offre jugée suffisante.</li>
+<li>Clip 10-20 s autour d'un reveal unique : excellent sur TikTok mais répétitif, d'où des courbes en pointe.</li>
+</ul>
+<div class="angle"><b>Angle :</b> emprunter le « moment de vérité » comme mécanique secondaire d'un autre genre, plutôt que de construire un jeu de déduction autonome.</div></div>
+</div>
+
+<h3>Systémique et émergent</h3>
+<div class="cards">
+<div class="card"><h4>Chaos coop systémique / sandbox physique <span class="chip c-em">émergent</span></h4>
+<div class="k">1-4 joueurs · 15-35 $ · tag Immersive Sim pollué (10 407 jeux dont Les Sims)</div>
+<ul>
+<li>Schedule I (solo dev, 19,99 $) : 459 000 joueurs simultanés, 151 M$ en 2025, jeu indé n°1 de l'année. Effets visuels absurdes conçus pour l'expérimentation ; chaînes TikTok qui découpent les VOD de CaseOh et Cyr.</li>
+<li>Abiotic Factor (10 personnes, Playstack) : 1,4 M copies, angle « Half-Life + Lethal Company », Early Access de 15 mois.</li>
+<li>Teardown : 2,5 M joueurs ; Noita : pic Twitch all-time atteint en août 2025, cinq ans après la sortie, grâce à un seul gros streamer.</li>
+<li>L'immersive sim stealth pur est une niche à 1-6 k avis, Early Access sans fin, et AA fragiles (Thick as Thieves à 65 %, OtherSide licencie).</li>
+</ul>
+<div class="angle"><b>Angle :</b> c'est la famille qui correspond le mieux à votre théorie de l'anecdote factory. Hook en 5 mots, deux ou trois systèmes qui se croisent, 2-4 joueurs, Early Access court et itératif.</div></div>
+
+<div class="card"><h4>Colony sim / histoires émergentes <span class="chip c-ms">mature sain au sommet</span></h4>
+<div class="k">solo · 25-35 $ · tag Colony Sim 1 167 jeux, offre doublée</div>
+<ul>
+<li>Médiane estimée 17 300 $ (2 280 copies) ; les jeux à 100+ avis font 150-400 k$. RimWorld dépasse 300 M$ à vie et son playtime moyen est de 242 heures.</li>
+<li>Timberborn 1.0 (mars 2026) : plus d'un million de copies, 96 %, grâce au twist castors + physique de l'eau. Against the Storm : 1 M, roguelite + city builder.</li>
+<li>Frostpunk 2 (AA à 45 $) à 74,8 % ; Kaiserpunk et Stranded: Alien Dawn en difficulté. Le lancement Early Access est le vrai lancement, le 1.0 rapporte 40 % de moins en médiane.</li>
+<li>Le lancement du DLC Odyssey de RimWorld a battu le record de chaînes Twitch sans battre le record de spectateurs : genre joué plus que regardé.</li>
+</ul>
+<div class="angle"><b>Angle :</b> le genre fondateur de l'anecdote factory, mais incompatible avec la stratégie clip. Si vous y allez, la diffusion passe par YouTube long format et la rétention, pas par TikTok.</div></div>
+
+<div class="card"><h4>Survival crafting coop <span class="chip c-ms">mature, milieu saturé</span></h4>
+<div class="k">2-8 joueurs · 30-40 $ · tag Open World Survival Craft 1 152 jeux</div>
+<ul>
+<li>Meilleur taux de hit de Steam en 2025 : 20,8 % des sorties dépassent 1 000 avis. Médiane estimée la plus haute des 107 sous-genres : 102 000 $.</li>
+<li>Mais le volume baisse (94 sorties en 2024, 72 en 2025) et les sorties-événements sont prises par les IP : Palworld 40 M, Valheim 17 M, Dune Awakening, Subnautica 2, Hytale.</li>
+<li>Nightingale (licenciements), Soulmask (Mixed), Once Human (de 231 000 à 19 000 joueurs). Enshrouded 1.0 le 15 octobre 2026.</li>
+<li>Early Access de 4 à 5 ans typique ; hébergement par les joueurs, donc peu d'infrastructure.</li>
+</ul>
+<div class="angle"><b>Angle :</b> hybride à angle net uniquement. Le survival générique est désormais un marché d'IP et de studios de 60 personnes.</div></div>
+
+<div class="card"><h4>Automation / factory <span class="chip c-sat">winner-takes-most</span></h4>
+<div class="k">solo · 20-40 $ · tag Automation pollué (4 050 jeux, 774 à venir surtout idle)</div>
+<ul>
+<li>Satisfactory 8 M copies et plus de 185 M$ ; Factorio Space Age 400 000 en moins d'une semaine ; shapez 2 650 000 avant son 1.0, porté par YouTube.</li>
+<li>Techtonica 1.0 à 63 %, Foundry à 44 % sur 30 jours, Captain of Industry annonce « 2 à 4 années d'Early Access de plus ». StarRupture : gros lancement, accueil tiède à 80,7 %.</li>
+<li>Les lancements battent les records de chaînes Twitch, pas de spectateurs. TikTok quasi absent.</li>
+</ul>
+<div class="angle"><b>Angle :</b> seulement un twist de forme (shapez 2, Timberborn). Le genre produit de l'ordre, pas des histoires : faible pour vos deux lentilles.</div></div>
+</div>
+
+<h3>Multijoueur compétitif</h3>
+<div class="cards">
+<div class="card"><h4>Extraction / PvPvE <span class="chip c-sat">saturé au sommet</span></h4>
+<div class="k">PvP · 40-50 $ ou free-to-play · 289 jeux tagués</div>
+<ul>
+<li>Arc Raiders : 16,3 M unités (Nexon), puis une chute de 465 000 à 29 800 joueurs Steam et des avis récents « Mixed ». Marathon (Bungie, 82 Metacritic) : moins 96 % de joueurs en six mois, dépréciation de 765 M$, 292 licenciements.</li>
+<li>Dungeonborne fermé en mai 2025, The Cycle en 2023, Gray Zone et Dark and Darker sous 3 000 joueurs. Crytek licencie deux fois.</li>
+<li>Le genre le plus clipable des trois familles compétitives : 30-90 s, mort à dix mètres de l'extraction, proximity chat.</li>
+<li>Serveurs dédiés et anticheat obligatoires, 1 000 à 10 000 $ par mois pour 1 000 joueurs simultanés hors anticheat.</li>
+</ul>
+<div class="angle"><b>Angle :</b> uniquement une extraction coop PvE à faible enjeu (Grain Rot, 200 000 unités en trois semaines). Le PvPvE est une spirale de population que trois gagnants contrôlent.</div></div>
+
+<div class="card"><h4>Sports physique compétitif <span class="chip c-ni">niche fidèle à pics</span></h4>
+<div class="k">PvP ou coop · 8-25 $</div>
+<ul>
+<li>Rematch (Sloclap, 135 personnes) : 1 M en 5 jours, puis moins 92 % en 15 mois, stable autour de 4 000 à 6 000 joueurs.</li>
+<li>Omega Strikers et Superball, les deux compétitifs free-to-play, sont morts (175 et 1 joueur). Super Battle Golf (coop casual, 8 $) : 500 000 en 9 jours.</li>
+<li>Clips 5-15 s : but acrobatique, replay in-game comme premier outil marketing. Format natif TikTok.</li>
+</ul>
+<div class="angle"><b>Angle :</b> coop physique casual à petit prix. Le compétitif à population est un piège à serveurs.</div></div>
+
+<div class="card"><h4>Horreur asymétrique <span class="chip c-sat">winner-take-all</span></h4>
+<div class="k">1 contre 4 · 20-40 $ · pas de tag Steam</div>
+<ul>
+<li>Dead by Daylight bat son record à dix ans : 170 000 joueurs simultanés en juin 2026, chiffre d'affaires en hausse de 50 % sur 12 mois.</li>
+<li>Texas Chain Saw Massacre : fin de support en mai 2025, 298 joueurs. Killer Klowns : 92 000 copies, 22 joueurs, licenciements chez IllFonic. Propnight fermé.</li>
+<li>Halloween: The Game (septembre 2026, 41 €) : de 27 000 à 2 200 joueurs en un mois.</li>
+</ul>
+<div class="angle"><b>Angle :</b> aucun pour un nouvel entrant indé.</div></div>
+</div>
+
+<h3>Boucles courtes solo</h3>
+<div class="cards">
+<div class="card"><h4>Roguelite action / bullet heaven <span class="chip c-mix">2D saturé, 3D émergent</span></h4>
+<div class="k">solo surtout · 5-15 $ ou 25-30 $ · tag Bullet Heaven créé par Valve en mai 2026</div>
+<ul>
+<li>Roguelite et roguelike sont les n°1 et n°2 des genres de hits 2025 (GameDiscoverCo). 104 action roguelikes ont dépassé 1 M$ à vie.</li>
+<li>Megabonk (solo dev, 9,99 $) : 1 M en deux semaines, 117 000 joueurs, pic Twitch 107 000. Ball x Pit, Shape of Dreams : la relance vient du pivot 3D.</li>
+<li>Vampire Survivors : audience Twitch en baisse de 69 %. Le développeur de Vital Shell : « contacter les streamers a été très difficile, presque aucune réponse ». Zukowski en mai 2026 : « marché vraiment saturé ».</li>
+<li>Clip 10-30 s : l'écran qui se remplit, lisible sans son.</li>
+</ul>
+<div class="angle"><b>Angle :</b> pivot 3D ou physique avec un polish élevé. Variance oui, anecdote non : les runs se ressemblent dans le récit.</div></div>
+
+<div class="card"><h4>Roguelike deckbuilder / Balatro-like <span class="chip c-mix">clones saturés, hooks ouverts</span></h4>
+<div class="k">solo · 10-25 $ · tag 1 872 jeux, taux de succès 4,87 % en 2025</div>
+<ul>
+<li>Slay the Spire 2 : 574 638 joueurs simultanés, record roguelike, 3 M la première semaine à 24,99 $. Premier gros coop du genre.</li>
+<li>CloverPit (2 personnes, 1 an, 9,99 $) : 750 000 en deux semaines, marketing 100 % organique, Instagram Reels « clear winner ». How Many Dudes? (7 personnes, 1 an) : 242 000 en trois semaines.</li>
+<li>Bramble Royale : 703 unités la première semaine ; son dev : « les gens sont vraiment fatigués des deckbuilders ». Monster Train 2 à un cinquième de Monster Train 1.</li>
+<li>Balatro n'a pas été lancé par TikTok : Twitch (Dan Gheesling, Northernlion), deux démos Next Fest, Discord, 300 petits streamers.</li>
+</ul>
+<div class="angle"><b>Angle :</b> métaphore de hasard neuve à 15 $ maximum, ou coop. Un des rares genres où un solo peut dépasser 100 M$.</div></div>
+
+<div class="card"><h4>Job sim / « simulator » <span class="chip c-mix">solo saturé, coop émergent</span></h4>
+<div class="k">1-4 joueurs · 13-25 $ · tag Job Simulator 1 095 jeux, taux 34,7 %</div>
+<ul>
+<li>Seule médiane de genre sourcée de l'étude : 70 000 $ brut pour les « X Simulator » depuis mi-2023 (GameDiscoverCo). Sur les 38 « Simulator » d'août 2025, un seul a dépassé ce chiffre hors Waterpark Simulator.</li>
+<li>Supermarket Simulator 2,6 M et 27 M$ ; TCG Card Shop Simulator (solo dev) 1 M ; PowerWash 2 ; Dispatch 4 M (narratif, pas un sim).</li>
+<li>Le coop est devenu standard (Schedule I, Supermarket, PowerWash 2, House Flipper 2 à 4 joueurs). Dear Passengers : 1 M wishlists en 3 jours.</li>
+<li>Twitch de Supermarket Simulator : 253 spectateurs au pic sur un an, cycle terminé.</li>
+</ul>
+<div class="angle"><b>Angle :</b> sim d'équipe coop à concept lisible en cinq mots. Le taux de 34,7 % dit surtout qu'un concept clair se vend encore.</div></div>
+</div>
+
+<h3>Genres témoins</h3>
+<div class="cards">
+<div class="card"><h4>Tactique au tour par tour <span class="chip c-ni">niche fidèle</span></h4>
+<div class="k">solo · 20-40 $ · 1 077 sorties en 2025 (API Gamalytic)</div>
+<ul>
+<li>Pire médiane de l'étude : 280 copies pour la cohorte 2024, 180 pour 2025. Mais 25 à 33 jeux par an dépassent 1 M$.</li>
+<li>MENACE (13 personnes, Hooded Horse, 39,99 $) : 600 000 wishlists, 250 000 ventes en deux mois. Tactical Breach Wizards (auto-édité, 7 ans) : 300 000+. Wartales : 1,5 M. Sunderfolk à 49,99 $ déçoit.</li>
+<li>Twitch quasi nul (Tactical Breach Wizards : 5 spectateurs en moyenne). Pas de problème de substitution, mais pas de découverte organique.</li>
+</ul>
+<div class="angle"><b>Verdict sur l'intuition :</b> infirmée pour les hits, confirmée pour la médiane. Le genre récompense les équipes expérimentées avec éditeur spécialisé.</div></div>
+
+<div class="card"><h4>Narratif court / horreur à twist <span class="chip c-mix">sain au sommet, file saturée</span></h4>
+<div class="k">solo · 3-30 $ · 2 163 sorties Psychological Horror en 2025</div>
+<ul>
+<li>Le genre avec le plus de jeux à plus d'un million de dollars de l'étude : 61 sur la cohorte 2024. « Narratif » est devenu le n°1 des genres à 1 000+ avis en 2025.</li>
+<li>Buckshot Roulette (solo, 2,99 $) : 8 M. Mouthwashing (9 personnes, 12,99 $) : 500 000+. Slay the Princess (duo, 17 mois) : 1 M. Blue Prince (quasi solo, 8 ans) : 2 M joueurs.</li>
+<li>Médiane en baisse (542 puis 399 copies), 72 % des sorties 2026 sous 1 000 copies. Horreur en octobre : volume maximal, 3e pire mois de revenu.</li>
+<li>Substitution par le stream documentée pour le linéaire cher (Paper Dolls : 5-6 M de vues pour 20 000 ventes) ; neutralisée par le prix impulsif ou les ramifications (Black Tabby).</li>
+</ul>
+<div class="angle"><b>Verdict sur l'intuition :</b> le témoin le plus porteur en nombre absolu de succès, et le plus grand risque de n'être jamais vu. Anecdote factory nulle : tout est scripté.</div></div>
+
+<div class="card"><h4>Cozy / farming sim <span class="chip c-mix">farming sain, cozy saturé</span></h4>
+<div class="k">solo · 14-30 $ · tag Cozy : 385 sorties en 2024, 1 130 sur les 9 premiers mois de 2026</div>
+<ul>
+<li>Farming : 20,8 % de taux de succès en 2024, deuxième de Steam. Fields of Mistria (auto-édité, 7 ans de production) : 1 M en août 2026, une des rares audiences Twitch en croissance (+173 %).</li>
+<li>Médiane du tag Cozy : 1 354 copies en 2024, 228 en 2026. Wanderstop (Annapurna) et Tales of the Shire plafonnent à 100 000.</li>
+</ul>
+<div class="angle"><b>Verdict :</b> le Stardew-like à boucle complète marche ; le cozy d'ambiance sans boucle est un désert.</div></div>
+
+<div class="card"><h4>Metroidvania <span class="chip c-sat">saturé au milieu</span></h4>
+<div class="k">solo · 20-30 $ · 293 sorties en 2025, taux 4 %</div>
+<ul>
+<li>Silksong : 535 000 joueurs le premier jour, 359 000 spectateurs Twitch, 7 M copies ; une anomalie historique après sept ans d'attente.</li>
+<li>Animal Well et Nine Sols réussissent en 6-7 ans d'auteur. Prince of Persia: The Lost Crown : équipe dissoute après 1,3 M. Bō (84 % d'avis positifs) : 31 700 copies.</li>
+<li>Le P90 des cohortes recule de 550 000 $ à 278 000 $ en un an.</li>
+</ul>
+<div class="angle"><b>Verdict :</b> le genre marche pour les auteurs, pas pour l'offre standard.</div></div>
+</div>
+
+<h2>Où les données pointent</h2>
+<div class="zones">
+<div class="zone"><h3>Zone A, alignée avec vos deux lentilles</h3>
+<p>Chaos coop systémique à hook lisible, 2 à 8 joueurs, 10 à 20 $, non-horreur ou horreur hybridée. C'est l'intersection de la demande friendslop, du sandbox systémique et de la sim d'équipe coop. Les espaces laissés ouverts par les sources : le coop-only non-friendslop premium, l'extraction coop PvE à faible enjeu, le coop à progression permanente, les sims « chill » de réparation.</p>
+<p><strong>Le prix :</strong> c'est la zone la plus encombrée. La différenciation doit venir du hook, de la structure de manche et de la thématique, pas du verbe « porter ». Il faut pouvoir lancer loin des mastodontes annoncés.</p></div>
+<div class="zone b"><h3>Zone B, anecdote sans clip</h3>
+<p>Colony sim, systémique solo, tactique profond. Les histoires naissent de systèmes qui se croisent, mais le payoff demande des heures de contexte. La diffusion passe par YouTube long format, les mèmes texte et la rétention. Moins de loterie, mais 4 à 5 ans d'Early Access et aucune aide de la vidéo courte.</p>
+<p><strong>Le prix :</strong> abandonner la stratégie clip, ou la réduire à des moments narrés de 60 à 90 secondes.</p></div>
+<div class="zone c"><h3>Zone C, à éviter</h3>
+<p>Extraction PvPvE, horreur asymétrique, compétitif free-to-play, bullet heaven 2D, clones de Slay the Spire, « X Simulator » solo, cozy sans boucle, metroidvania standard. Dans chaque cas la donnée est la même : soit un ou deux gagnants verrouillent la population, soit la file des suiveurs s'allonge plus vite que l'audience.</p></div>
+</div>
+
+<h2>Les deux lentilles</h2>
+<div class="read"><p>Les piliers (hook en une phrase, core experience, identité esthétique) décident du succès. Les deux lentilles ci-dessous décident de la diffusion et de la mémorabilité. Chaque statement se teste sur un playtest filmé.</p></div>
+<div class="lens">
+<div><h3>Lentille A, le clip (ce que voit un spectateur étranger)</h3>
+<ol>
+<li><strong>Unité de temps.</strong> Séquences autonomes de 15 à 60 s avec début et fin.</li>
+<li><strong>Lisibilité en deux secondes</strong>, par l'image et le son, jamais par le texte.</li>
+<li><strong>Payoff net</strong>, non ambigu, visible et audible.</li>
+<li><strong>L'échec est le contenu</strong> : plus drôle que la réussite, coûte au plus une séquence.</li>
+<li><strong>Variance</strong> : même setup, issues différentes.</li>
+<li><strong>Réaction humaine amplifiée</strong> : temps de tension où la face cam devient le spectacle.</li>
+<li><strong>Format vertical</strong> : l'information critique tient dans le tiers central, lisible en 9:16.</li>
+<li><strong>Signature en une image</strong> : silhouette, palette ou son reconnaissables en une frame.</li>
+<li><strong>Le clip est une publicité</strong> : il montre ce que le spectateur ferait lui-même, pas un twist qui s'épuise en regardant.</li>
+<li><strong>Titrabilité</strong> : chaque moment se décrit en cinq mots.</li>
+<li><strong>Capture facilitée</strong> (replay, résumé, caméra intégrée), optionnel.</li>
+</ol></div>
+<div><h3>Lentille B, l'anecdote factory (ce que le joueur raconte le lendemain)</h3>
+<ol>
+<li><strong>Causalité lisible</strong> : chaque événement marquant a une cause reconstituable.</li>
+<li><strong>Attribution</strong> : un acteur identifiable est responsable, héros ou coupable.</li>
+<li><strong>Croisement de systèmes</strong> : au moins deux systèmes indépendants, jamais un script.</li>
+<li><strong>Verbes polyvalents</strong> : plusieurs usages et interactions par verbe.</li>
+<li><strong>Conséquence durable</strong> : l'événement change la suite de la partie.</li>
+<li><strong>Témoins</strong> : vu par un autre joueur, ou rendu visible par un récapitulatif.</li>
+<li><strong>Longue queue</strong> : les événements extrêmes sont rares mais possibles.</li>
+<li><strong>Racontable sans le jeu</strong> : situation, retournement, chute, en trois phrases.</li>
+</ol>
+<p style="font-size:.9rem;color:var(--muted)">Test : le lendemain d'un playtest, « raconte-moi une histoire de la partie ». Compter les histoires distinctes.</p></div>
+</div>
+<div class="note">Ce que le marché ajoute aux lentilles : le spectateur doit comprendre la règle en cinq secondes et vouloir rejouer avec ses amis (« audience format », GDC 2026). Peak a ajouté de la friction sociale volontaire, sac à dos inaccessible seul, guide lisible par un seul joueur, morts transformés en fantômes qui parlent. Schedule I a des animations bouclables, un HUD minimal et un cadrage vertical. Le clip est pensé dès le design, pas au montage.</div>
+
+<h2>Ce que l'étude n'a pas pu mesurer</h2>
+<div class="read">
+<ul>
+<li><strong>Volumes de sorties par tag et par année</strong> : SteamDB, Gamalytic et VG Insights bloquent l'accès automatisé. Une exception : l'API publique de Gamalytic a répondu pour six tags témoins, ce qui a permis les cohortes 2024-2026 du tactique, de l'horreur psychologique, du farming, du cozy et du metroidvania. Cette API est réutilisable pour affiner les autres genres.</li>
+<li><strong>Revenu médian par tag</strong> : une seule médiane sourcée (70 000 $ pour les « X Simulator »). Le reste vient d'un benchmark dérivé de Gamalytic en septembre 2026 ou de nos propres calculs sur l'API.</li>
+<li><strong>Google Trends</strong> : non récupérable par les outils utilisés.</li>
+<li><strong>Vues TikTok chiffrées</strong> : aucune donnée sourcée pour Balatro ou Megabonk ; seules des mentions qualitatives pour Schedule I et Peak.</li>
+<li><strong>Conversion clip vers vente</strong> : aucune étude 2024-2026 ne la quantifie. Les seules données directes datent de 2016 (Punch Club, 2,8 % des spectateurs achètent).</li>
+<li>Les estimateurs de ventes fondés sur les avis sous-estiment les hits à bas prix (Peak 8 M estimés contre 11 M annoncés) et surestiment les hits chers (Dispatch 8 M estimés contre 4 M annoncés).</li>
+</ul>
+</div>
+
+<h2>Méthode</h2>
+<div class="read">
+<p>Six collectes en parallèle le 4 octobre 2026, chacune sur trois genres ou sur le cadre macro, par recherche web et lecture directe des pages. Chaque chiffre a été daté, sourcé et marqué « sourcé » (éditeur, Valve, presse citant une source officielle) ou « estimation » (modèle tiers). Les verdicts de position dans le cycle et les notes de la grille sont un jugement d'analyste à partir de ces données. Les hypothèses de départ de l'équipe ont été traitées comme les autres genres.</p>
+<p><strong>Sources principales</strong></p>
+<ul class="src">
+<li><a href="https://howtomarketagame.com/2026/01/27/what-the-hell-happened-in-2025/">Zukowski, What the hell happened in 2025 (27/01/2026)</a></li>
+<li><a href="https://howtomarketagame.com/2026/07/30/is-friendslop-saturated/">Zukowski, Is friendslop saturated? (30/07/2026)</a></li>
+<li><a href="https://howtomarketagame.com/2025/11/12/the-cycle-of-a-hit-genre/">Zukowski, The cycle of a hit genre (12/11/2025)</a></li>
+<li><a href="https://howtomarketagame.com/2025/12/15/leftover-research-from-2025/">Zukowski, Leftover research from 2025 (taux par genre)</a></li>
+<li><a href="https://howtomarketagame.com/2026/05/19/2026-state-of-bullet-heavens-how-vital-shell-succeeded/">Zukowski, State of bullet heavens 2026</a></li>
+<li><a href="https://howtomarketagame.com/2026/08/21/part-3-the-week-of-the-golden-age-how-many-dudes/">Zukowski, How Many Dudes? (Shorts vs algorithme Steam)</a></li>
+<li><a href="https://howtomarketagame.com/2026/09/08/horror-games-dont-need-to-launch-in-october/">Zukowski, Horror games don't need October (08/09/2026)</a></li>
+<li><a href="https://howtomarketagame.com/benchmarks/">Zukowski, Benchmarks wishlists et Next Fest</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions">GameDiscoverCo, State of Steam wishlist conversions (17/10/2025)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/how-have-the-genres-of-hit-pc-games">GameDiscoverCo, Genres of hit PC games 2021-2025 (25/08/2026)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/which-genres-have-ruled-steam-a-new">GameDiscoverCo, Which genres have ruled Steam (27/06/2025)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/august-2026s-top-new-pc-and-console">GameDiscoverCo, August 2026 top new games (04/09/2026)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/are-steam-game-prices-dropping-and">GameDiscoverCo, Are Steam prices dropping (21/11/2025)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/no-more-universal-daily-deals-on">GameDiscoverCo, No more universal Daily Deals (02/10/2026)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/the-state-of-steam-early-access-graduates">GameDiscoverCo, Early Access graduates (09/12/2025)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/real-data-how-cloverpit-hit-750k">GameDiscoverCo, How CloverPit hit 750k (14/10/2025)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/how-two-friendslop-hits-got-the-audience">GameDiscoverCo, Two friendslop hits (10/03/2026)</a></li>
+<li><a href="https://wnhub.io/news/stores-and-publishing/item-44009">Carless, médiane 70 k$ des « Simulator » (02/07/2024)</a></li>
+<li><a href="https://naavik.co/digest/friendslop-disrupting-the-live-ops-status-quo/">Naavik, Friendslop disrupting live ops (09/08/2026)</a></li>
+<li><a href="https://alineaanalytics.substack.com/p/the-top-new-2025-games-by-players">Alinea, Top new 2025 games (19/12/2025)</a></li>
+<li><a href="https://alineaanalytics.substack.com/p/2026s-top-games-by-copies-sold-so">Alinea, 2026 top games by copies (01/07/2026)</a></li>
+<li><a href="https://www.gamedeveloper.com/business/valve-says-5-836-titles-earned-over-100-000-on-steam-in-2025">Game Developer, Valve GDC 2026 (11/03/2026)</a></li>
+<li><a href="https://www.gamedeveloper.com/business/peak-co-developer-aggro-crab-shares-lessons-in-friendslop">Game Developer, Aggro Crab lessons in friendslop (10/03/2026)</a></li>
+<li><a href="https://www.gamedeveloper.com/marketing/the-methodical-marketing-beats-behind-overnight-success-balatro">Game Developer, Marketing de Balatro (15/04/2025)</a></li>
+<li><a href="https://localthunk.com/blog/balatro-timeline-3aarh">LocalThunk, Balatro timeline (06/03/2025)</a></li>
+<li><a href="https://www.thegamer.com/schedule-1-tiktok-streamer/">TheGamer, Schedule I et TikTok (01/04/2025)</a></li>
+<li><a href="https://80.lv/articles/analysts-report-drop-in-game-revenue-on-steam-despite-growing-number-of-releases">Gamalytic 2025 via 80.lv (22/10/2025)</a></li>
+<li><a href="https://gameworldobserver.com/2026/09/01/the-median-revenue-of-games-on-steam-has-been-declining-for-12-consecutive-years">We Love It, médiane en baisse depuis 12 ans (01/09/2026)</a></li>
+<li><a href="https://www.immutable.com/insights/steam-genre-revenue-benchmarks">Benchmark revenus par genre dérivé de Gamalytic (09/2026)</a></li>
+<li><a href="https://api.gamalytic.com/steam-games/list">API publique Gamalytic (cohortes par tag)</a></li>
+<li><a href="https://hatchet.gg/blog/using-streaming-to-create-perennial-sellers-on-steam/">Hatchet, Streaming et ventes pérennes (24/10/2025)</a></li>
+<li><a href="https://knowledge.edge-online.com/p/fortnite-and-arc-raiders-wobble-can-service-games-still-succeed-in-2026">Edge, Can service games still succeed (10/04/2026)</a></li>
+<li><a href="https://thegamepost.com/marathon-player-count-96-launch-bungie-season-3/">Marathon, moins 96 % (06/09/2026)</a></li>
+<li><a href="https://www.pcgamesinsider.biz/news/75168/gun-interactive-ends-support-for-texas-chain-saw-massacre/">Fin de support de TCM (14/05/2025)</a></li>
+<li><a href="https://streamscharts.com/news/chained-together-one-week-twitch-recap">Streams Charts, Chained Together semaine 1 (26/06/2024)</a></li>
+<li><a href="https://wearesecretmode.com/news/chained-together-joins-secret-mode">Secret Mode, Chained Together 10 M (02/06/2026)</a></li>
+<li><a href="https://www.gamesmarket.global/menace-from-overhype-and-hooded-pulls-off-a-resounding-launch/">MENACE lancement (06/02/2026)</a></li>
+<li><a href="https://newsletter.gamediscover.co/p/slay-the-princess-how-did-this-horror">GameDiscoverCo, Slay the Princess et le piège du Let's Play (06/11/2023)</a></li>
+<li><a href="https://www.gamingonlinux.com/2026/05/valve-make-adjustments-to-steam-tags-and-they-settled-the-vampire-survivor-like-argument-with-bullet-heaven/">Nouveaux tags Steam, mai 2026</a></li>
+<li>Données Steam et audience : pages store Steam, Steambase, SteamCharts, SteamPulse, Raijin, SullyGnome, TwitchTracker (toutes relevées le 4 octobre 2026).</li>
+</ul>
+</div>
+
+<h2>Prochaines étapes</h2>
+<div class="read">
+<ol>
+<li><strong>Choisir deux ou trois zones</strong> dans la grille, en débat à trois, avec vos propres pondérations des cinq axes.</li>
+<li><strong>Constituer le corpus de clips</strong> : une vingtaine de hits des zones retenues, leurs cent clips les plus vus, relever durée, déclencheur, contexte nécessaire et payoff. Corriger les statements si la réalité les contredit.</li>
+<li><strong>Affiner les volumes</strong> via l'API Gamalytic pour les genres retenus, ou un abonnement GameDiscoverCo Plus qui donne les cohortes par tag.</li>
+<li><strong>Tester des hooks</strong> : trois à cinq pitchs d'une phrase par zone, puis des pages Steam de test. Le wishlist est le seul signal qui prédit les ventes.</li>
+<li><strong>Caler la fenêtre</strong> : éviter octobre pour l'horreur, viser un Next Fest avec momentum récent, et intégrer la bascule des deals vers la recommandation personnalisée début 2027.</li>
+</ol>
+</div>
+</div>
+
+<script>
+(function(){
+  var rows=document.querySelectorAll('#grid tbody tr[data-d]');
+  rows.forEach(function(r){
+    var keys=['d','p','c','a','r'],tot=0,cells=r.querySelectorAll('td');
+    keys.forEach(function(k,i){
+      var v=parseInt(r.dataset[k],10);tot+=v;
+      var s='<span class="dots">';for(var j=1;j<=5;j++){s+='<i class="'+(j<=v?'on':'')+'"></i>';}s+='</span>';
+      cells[i+1].innerHTML=s;cells[i+1].className='n';cells[i+1].setAttribute('data-v',v);
+    });
+    r.dataset.t=tot;cells[6].textContent=tot+' / 25';
+    r.dataset.name=cells[0].textContent.trim();
+  });
+  var body=document.querySelector('#grid tbody'),asc={};
+  document.querySelectorAll('#grid th[data-k]').forEach(function(th){
+    th.addEventListener('click',function(){
+      var k=th.dataset.k;asc[k]=!asc[k];
+      var list=Array.prototype.slice.call(rows);
+      list.sort(function(x,y){
+        if(k==='name'){return asc[k]?x.dataset.name.localeCompare(y.dataset.name):y.dataset.name.localeCompare(x.dataset.name);}
+        var a=parseInt(x.dataset[k],10),b=parseInt(y.dataset[k],10);return asc[k]?a-b:b-a;
+      });
+      document.querySelectorAll('#grid tbody tr.fam').forEach(function(f){f.hidden=true;});
+      list.forEach(function(r){body.appendChild(r);});
+    });
+  });
+})();
+</script>
