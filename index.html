@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cartographie Steam 2026</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -69,6 +74,8 @@ td.angle{min-width:260px;color:var(--fg)}
 .legend{font-size:.82rem;color:var(--muted);margin-top:.5rem}
 </style>
 
+</head>
+<body>
 <div class="wrap">
 <div class="read">
 <div class="eyebrow">Étude de marché · Steam · état au 4 octobre 2026</div>
@@ -375,6 +382,15 @@ td.angle{min-width:260px;color:var(--fg)}
 <h2>Méthode</h2>
 <div class="read">
 <p>Six collectes en parallèle le 4 octobre 2026, chacune sur trois genres ou sur le cadre macro, par recherche web et lecture directe des pages. Chaque chiffre a été daté, sourcé et marqué « sourcé » (éditeur, Valve, presse citant une source officielle) ou « estimation » (modèle tiers). Les verdicts de position dans le cycle et les notes de la grille sont un jugement d'analyste à partir de ces données. Les hypothèses de départ de l'équipe ont été traitées comme les autres genres.</p>
+<p><strong>Notes de données par famille</strong>, avec chaque chiffre et sa source, lisibles sur GitHub :</p>
+<ul class="src">
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/blob/main/donnees/macro.md">Cadre macro Steam 2025-2026 et dossier clipping</a></li>
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/blob/main/donnees/g-friendslop-party-bluff.md">Friendslop, party physique, déduction sociale</a></li>
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/blob/main/donnees/g-colony-sandbox-automation.md">Colony sim, sandbox systémique, automation</a></li>
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/blob/main/donnees/g-survival-extraction-competitif.md">Survival crafting, extraction, compétitif</a></li>
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/blob/main/donnees/g-roguelite-deckbuilder-jobsim.md">Roguelite, deckbuilder, job sims</a></li>
+<li><a href="https://github.com/MathieuCABOT/SteamMarketMapping/tree/main/donnees">Extractions brutes de l'API Gamalytic pour les six tags témoins (JSON)</a></li>
+</ul>
 <p><strong>Sources principales</strong></p>
 <ul class="src">
 <li><a href="https://howtomarketagame.com/2026/01/27/what-the-hell-happened-in-2025/">Zukowski, What the hell happened in 2025 (27/01/2026)</a></li>
@@ -460,3 +476,5 @@ td.angle{min-width:260px;color:var(--fg)}
   });
 })();
 </script>
+</body>
+</html>
